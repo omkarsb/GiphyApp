@@ -13,8 +13,8 @@ export default class App extends React.Component {
   constructor() {
     super();
     this.state = { 
-      URL: 'https://media2.giphy.com/media/OhYp40dhpbmhO/giphy.gif',
-      ID: 'aaaaaaaaaa',
+      URL: 'placeholder',
+      ID: 'placeholder',
       checked: false
     };
     this._randomGIF = this._randomGIF.bind(this);
@@ -22,7 +22,10 @@ export default class App extends React.Component {
     this._NewGiphyy = this._NewGiphyy.bind(this);
     this._ratingCompleted = this._ratingCompleted.bind(this);
   }
-
+  
+  componentWillMount(){
+    this._randomGIF();
+  }
 
 
 
@@ -46,7 +49,7 @@ client.mutate({
     id: String(this.state.ID),
   }
   })
-  .then(data => {console.log("Data" + data);  
+  .then(data => {console.log( data);  
     this.setState({checked : true});})
   .catch(error => {
     console.error(error);
@@ -78,6 +81,7 @@ query: gql`
 .then(data => {
   console.log(data.data.giphy.random.images.original.url);
   this.setState({URL : data.data.giphy.random.images.original.url});
+  console.log("this.state.URL : : : "+this.state.URL)
   this.setState({ID: data.data.giphy.random.id});
 })
 .catch(error => console.error(error));
@@ -104,14 +108,10 @@ client.query({
   }
   })
   .then(data => {
-    console.log(this.state.ID)
-    if(data.data.keyValue.key!=null || data.data.keyValue.value==='liked'){
-      console.log(data.data.keyValue.value);
+    console.log("_searchKeyValueID: " + this.state.ID);
+    if(data.data.keyValue.getValue.key!=null || data.data.keyValue.getValue.value==='liked'){
       console.log('This GIF has reoccured');
       this.setState({checked : true});
-    }
-    else{
-      console.log('no value in key pair'+data.data.keyValue.value);
     }
     }
   )
@@ -137,6 +137,7 @@ _NewGiphyy(){
 
 
   render() {
+    
     const { checked } = this.state;
     return (
       <View style={styles.container}>
