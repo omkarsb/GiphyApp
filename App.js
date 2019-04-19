@@ -1,7 +1,6 @@
 import React from 'react';
 import ApolloClient  from 'apollo-boost';
 import gql from 'graphql-tag';
-import SparkButton from 'react-native-sparkbutton';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity, Dimensions} from 'react-native';
 
 
@@ -118,7 +117,7 @@ This is useful to determine if this GIF has been repeated, if so, was it liked, 
    .then(data => {
      if(data.data.keyValue.getValue.key!=null || data.data.keyValue.getValue.value==='liked'){
        this.setState({checked : true});
-       console.log("GIF ha reoccurred")
+       console.log("GIF has reoccurred")
      }
      }
    )
